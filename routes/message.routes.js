@@ -2,22 +2,13 @@ const express = require('express')
 const router = express.Router()
 const Message = require('../models/message')
 
-router.get('/create', async () => {
+router.post('/create', async (req, res) => {
   let message = new Message({
-    owner: 'Santiago',
-    content: 'Hola a todos'
+    owner: req.body.owner,
+    content: req.body.content
   })
-  await message.save(function(err, user) {
-    if (err) {
-      console.log(err)
-      // res.send(400, 'Bad Request')
-      res.json({ status: 'Error' })
-      return
-    }
-
-    console.log(message)
-    res.json({ status: 'message created' })
-  })
+  await message.save()
+  res.json({ status: 'message created' })
 })
 
 // delete 1
