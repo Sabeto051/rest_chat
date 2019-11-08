@@ -3,6 +3,7 @@ const express = require('express')
 const { mongoose } = require('./database')
 const router = express.Router();
 var bodyParser = require('body-parser')
+const User = require('./models/user')
 
 const app = express()
 
@@ -12,7 +13,7 @@ app.set('port', process.env.PORT || 3030)
 // Middlewares
 app.use(express.json())
 
-app.use('/api/messages', require('./routes/message.routes'))
+//app.use('/api/messages', require('./routes/message.routes'))
 
 //functions
 app.get('/', function (req, res) {
@@ -20,8 +21,19 @@ app.get('/', function (req, res) {
 })
 
 app.post("/", bodyParser.urlencoded({ extended: false }), function (req, res, next) {
-  var id = req.body.id;
-  var pw = req.body.pw;
+
+  let userLogin = new User({
+    username: req.body.id,
+    password: req.body.pw
+  })
+
+  User.find({
+    username: req.body.id,
+    password: req.body.pw
+  }).then(err, response => {
+    console.error(err)
+    console.log(response)
+  })
 
   if (id == "test" && pw == "1234") {
     res.send("Welcome to the Chat Server")
