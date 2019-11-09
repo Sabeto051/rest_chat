@@ -11,7 +11,7 @@ router.post('/create', async (req, res) => {
   res.json({ status: 'message created' })
 })
 
-// delete 1 7641
+// delete 1 7845
 router.delete('/', async (req, res) => {
   let resMessage = 'message deleted'
   await Message.findByIdAndRemove(String(req.query.id)).catch(err => {
