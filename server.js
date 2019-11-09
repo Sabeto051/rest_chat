@@ -1,23 +1,20 @@
+const path = require('path')
 const express = require('express')
-// const path = require('path')
-const { mongoose } = require('./database')
-
 const app = express()
 
-// Settings
-app.set('port', process.env.PORT || 3001)
+// settings
+app.set('port', process.env.PORT || 3002)
 
-// Middlewares
 app.use(express.json())
 
-app.use('/api/messages', require('./routes/message.routes'))
+// static files
+app.use(express.static(path.join(__dirname, 'public')))
 
-//functions
-app.get('/', function(req, res) {
-  res.send('Welcome to the Chat History')
+app.post('/aaa', (req, res) => {
+  // console.log(req)
+  console.log(req.body)
 })
 
-// Starting the server
 app.listen(app.get('port'), () => {
-  console.log(`server on port ${app.get('port')}`)
+  console.log('Server on port', app.get('port'))
 })
